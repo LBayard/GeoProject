@@ -2,3 +2,10 @@ TestProjectCSharp/TestCountriesApp/.vs/
 TestProjectCSharp/TestCountriesApp/TestCountriesApp/bin/Debug/net6.0/Countries.txt
 TestProjectCSharp/TestCountriesApp/TestCountriesApp/bin/
 TestProjectCSharp/TestCountriesApp/TestCountriesApp/obj/
+GeoProjectUnity/Library/
+GeoProjectUnity/Logs/
+GeoProjectUnity/UserSettings/
+GeoProjectUnity/Builds/
+GeoProjectUnity/Temp/
+GeoProjectUnity/.vs/
+GeoProjectUnity/obj/
