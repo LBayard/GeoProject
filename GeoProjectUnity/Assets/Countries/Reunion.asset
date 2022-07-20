@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3b24341b716ae04ebbbe5a1a060ef5c, type: 3}
+  m_Name: Reunion
+  m_EditorClassIdentifier: 
+  countryName: Reunion
+  question: Pick a country that starts with N
+  altCountries:
+  - {fileID: 11400000, guid: 40683456261bd104185bdbcc1c28c816, type: 2}
+  - {fileID: 11400000, guid: 913790481e6789943b0c606edbb77a63, type: 2}
+  - {fileID: 11400000, guid: c77a129afc812ec4c991e7d66560f7f8, type: 2}
+  - {fileID: 11400000, guid: afa6e9f46e9bc0a49aa2c52d7ae44ba4, type: 2}
+  - {fileID: 11400000, guid: e9f8ddae78d263e4d8e58c68ab12df32, type: 2}
+  - {fileID: 11400000, guid: 3e5f8e8946da0ac499cb4132c6a8c602, type: 2}
+  answers:
+  - 
+  - 
+  - 
+  - 
+  correctAnswerIndex: 0
+  flag: {fileID: 2800000, guid: afc26db8dbf22054aaaf668742da6129, type: 3}
