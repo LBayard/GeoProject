@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [CreateAssetMenu(menuName ="Country Name", fileName = "New Country")]
 public class CountrySO : ScriptableObject
@@ -12,8 +13,7 @@ public class CountrySO : ScriptableObject
     [SerializeField] CountrySO[] altCountries;
     [SerializeField] string[] answers = new string[4];
     [SerializeField] int correctAnswerIndex;
-    [SerializeField] Texture2D flag;
-
+    [SerializeField] Sprite flag;
     public string GetCountry()
     {
         return countryName;
@@ -37,5 +37,10 @@ public class CountrySO : ScriptableObject
     public void SetAnswer(int _index, string _answer)
     {
         answers[_index] = _answer;
+    }
+
+    public Sprite GetFlag()
+    {
+        return flag;
     }
 }
