@@ -16,6 +16,7 @@ public class QuizManager : MonoBehaviour
     private CountrySO currentCountry;
     private CountrySO nextCountry;
     private int currentRightAnswerIndex;
+    private List<CountrySO> previousAnswers = new List<CountrySO>();
 
     private void Awake()
     {
@@ -25,20 +26,17 @@ public class QuizManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        previousAnswers.Clear();
         currentCountry = GetRandomCountrySO();
         DisplayCountryInfo(currentCountry);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     #region Quiz Tools
 
     private void DisplayCountryInfo(CountrySO _country)
     {
+        previousAnswers.Add(_country);
         DisplayQuestionFlag(_country);
         DisplayQuestionText(_country);
         DisplayCountryName(_country);
@@ -92,6 +90,13 @@ public class QuizManager : MonoBehaviour
     private void SetAnswerButtons(CountrySO _country)
     {
         List<CountrySO> possibleAnswers = GetAnswerPool(_country);
+
+        if (possibleAnswers.Count == 0)
+        {
+            QuestionText.text = "You win! Game Over";
+            SetAllButtonsVisible(false);
+            return;
+        }
         List<CountrySO> wrongAnswers = GetWrongAnswerPool(_country);
         int rightAnswer = Random.Range(0, possibleAnswers.Count);
         currentRightAnswerIndex = Random.Range(0, AnswerButtons.Count());
@@ -110,6 +115,14 @@ public class QuizManager : MonoBehaviour
         }
     }
 
+    private void SetAllButtonsVisible(bool _value)
+    {
+        for (int i = 0; i < AnswerButtons.Count(); i++)
+        {
+            AnswerButtons[i].SetActive(_value);
+        }
+    }
+
     private List<CountrySO> GetAnswerPool(CountrySO _country)
     {
         List<CountrySO> answerPool = new List<CountrySO>();
@@ -117,7 +130,8 @@ public class QuizManager : MonoBehaviour
         char endingCountryChar = countryString.ToUpper()[countryString.Length - 1];
 
         answerPool.AddRange(Countries.Where(cso => cso.GetCountry().StartsWith(endingCountryChar)));
-
+        //remove countries already answered from the answer pool
+        answerPool = answerPool.Where(cso => !previousAnswers.Contains(cso)).ToList();
         return answerPool;
     }
 
@@ -129,6 +143,8 @@ public class QuizManager : MonoBehaviour
 
         answerPool.AddRange(Countries.Where(cso => !cso.GetCountry().StartsWith(endingCountryChar)));
 
+        //remove countries already answered from the answer pool
+        answerPool = answerPool.Where(cso => !previousAnswers.Contains(cso)).ToList();
         return answerPool;
     }
 
