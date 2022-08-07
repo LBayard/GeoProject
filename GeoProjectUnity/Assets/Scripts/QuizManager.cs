@@ -12,11 +12,15 @@ public class QuizManager : MonoBehaviour
     [SerializeField] Image QuestionImage;
     [SerializeField] TMP_Text QuestionText;
     [SerializeField] TMP_Text CountryName;
+    [SerializeField] TextMeshProUGUI Timer;
+    [SerializeField] float WrongAnswerPenalty = 5f;
+    [SerializeField] bool IsTimerRunning;
 
     private CountrySO currentCountry;
     private CountrySO nextCountry;
     private int currentRightAnswerIndex;
     private List<CountrySO> previousAnswers = new List<CountrySO>();
+    private float timerValue;
 
     private void Awake()
     {
@@ -26,11 +30,16 @@ public class QuizManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Timer.text = $"Timer: 00:00";
         previousAnswers.Clear();
         currentCountry = GetRandomCountrySO();
         DisplayCountryInfo(currentCountry);
     }
 
+    private void Update()
+    {
+        DisplayTimer();
+    }
 
     #region Quiz Tools
 
@@ -84,6 +93,7 @@ public class QuizManager : MonoBehaviour
         else
         {
             AnswerButtons[_index].GetComponent<Button>().interactable = false;
+            timerValue += WrongAnswerPenalty;
         }
     }
 
@@ -95,6 +105,7 @@ public class QuizManager : MonoBehaviour
         {
             QuestionText.text = "You win! Game Over";
             SetAllButtonsVisible(false);
+            IsTimerRunning = false;
             return;
         }
         List<CountrySO> wrongAnswers = GetWrongAnswerPool(_country);
@@ -168,6 +179,18 @@ public class QuizManager : MonoBehaviour
         for (int i = 0; i < AnswerButtons.Length; i++)
         {
             AnswerButtons[i].GetComponent<Button>().interactable = _isInteractive;
+        }
+    }
+
+    private void DisplayTimer()
+    {
+        if (IsTimerRunning)
+        {
+            timerValue += Time.deltaTime;
+            float minutes = Mathf.FloorToInt(timerValue / 60);
+            float seconds = Mathf.FloorToInt(timerValue % 60);
+            string timeDisplatStr = string.Format("{0:00}:{1:00}", minutes, seconds);
+            Timer.text = $"Timer: {timeDisplatStr}";
         }
     }
 
