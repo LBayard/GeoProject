@@ -20,10 +20,13 @@ public class QuizManager : MonoBehaviour
     private CountrySO nextCountry;
     private int currentRightAnswerIndex;
     private List<CountrySO> previousAnswers = new List<CountrySO>();
-    private float timerValue;
+    private LevelManager levelManager;
+    private ScoreKeeper scoreKeeper;
 
     private void Awake()
     {
+        scoreKeeper = FindObjectOfType<ScoreKeeper>();
+        levelManager = FindObjectOfType<LevelManager>();
         DEBUG_EnableCountryNamesOnButtons(false);
     }
 
@@ -31,6 +34,7 @@ public class QuizManager : MonoBehaviour
     void Start()
     {
         Timer.text = $"Timer: 00:00";
+        scoreKeeper.ResetScore();
         previousAnswers.Clear();
         currentCountry = GetRandomCountrySO();
         DisplayCountryInfo(currentCountry);
@@ -93,7 +97,7 @@ public class QuizManager : MonoBehaviour
         else
         {
             AnswerButtons[_index].GetComponent<Button>().interactable = false;
-            timerValue += WrongAnswerPenalty;
+            scoreKeeper.AddTime(WrongAnswerPenalty);
         }
     }
 
@@ -103,9 +107,10 @@ public class QuizManager : MonoBehaviour
 
         if (possibleAnswers.Count == 0)
         {
-            QuestionText.text = "You win! Game Over";
+            QuestionText.text = string.Empty;
             SetAllButtonsVisible(false);
             IsTimerRunning = false;
+            levelManager.LoadGameOver();
             return;
         }
         List<CountrySO> wrongAnswers = GetWrongAnswerPool(_country);
@@ -186,9 +191,9 @@ public class QuizManager : MonoBehaviour
     {
         if (IsTimerRunning)
         {
-            timerValue += Time.deltaTime;
-            float minutes = Mathf.FloorToInt(timerValue / 60);
-            float seconds = Mathf.FloorToInt(timerValue % 60);
+            scoreKeeper.AddTime(Time.deltaTime);
+            float minutes = scoreKeeper.GetMinutes();
+            float seconds = scoreKeeper.GetSeconds();
             string timeDisplatStr = string.Format("{0:00}:{1:00}", minutes, seconds);
             Timer.text = $"Timer: {timeDisplatStr}";
         }
