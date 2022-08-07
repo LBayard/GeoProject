@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ScoreKeeper : MonoBehaviour
 {
-    private int currentScore = 0;
+    private float timerValue;
 
     static ScoreKeeper instance;
 
@@ -28,20 +28,24 @@ public class ScoreKeeper : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
     }
-    public int GetScore()
+
+    public void AddTime(float time)
     {
-        return currentScore;
+        timerValue += time;
     }
 
-    public void AddToScore(int points)
+    public int GetMinutes()
     {
-        currentScore += points;
-        Mathf.Clamp(points, 0, int.MaxValue);
-        Debug.Log($"Score: {GetScore()}");
+        return Mathf.FloorToInt(timerValue / 60);   
+    }
+
+    public int GetSeconds()
+    {
+        return Mathf.FloorToInt(timerValue % 60);
     }
 
     public void ResetScore()
     {
-        currentScore = 0;
+        timerValue = 0;
     }
 }

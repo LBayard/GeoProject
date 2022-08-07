@@ -60,6 +60,7 @@
     <Compile Include="Assets\Scripts\QuizManager.cs" />
     <Compile Include="Assets\Scripts\CountrySO.cs" />
     <Compile Include="Assets\Scripts\LevelManager.cs" />
+    <Compile Include="Assets\Scripts\DisplayScore.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
